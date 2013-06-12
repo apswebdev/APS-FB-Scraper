@@ -175,7 +175,7 @@ class fb_scraper_obj
 							    
 								<div class="hidden-inner">
 								
-								<div class="cont-select"><div class="inp"><input id="all_page_select" type="checkbox" value=""></div><div class="title_check">Select All</div></div>
+								<div class="cont-select"><div class="inp"><input id="all_page_select" type="checkbox" value="" checked></div><div class="title_check"><b>Check / Uncheck All</b></div></div>
 								 
 								<?php $data1 = self::get_alldata('page',true); 
 									  
@@ -206,7 +206,7 @@ class fb_scraper_obj
 								
 								<div class="hidden-inner">
 								
-								<div class="cont-select"><div class="inp"><input id="all_post_select" type="checkbox" value=""></div><div class="title_check">Select All</div></div>
+								<div class="cont-select"><div class="inp"><input id="all_post_select" type="checkbox" value="" checked></div><div class="title_check"><b>Check / Uncheck All</b></div></div>
 								
 								<?php $data1 = self::get_alldata('post',true); 
 									  

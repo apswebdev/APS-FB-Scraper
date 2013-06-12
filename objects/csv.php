@@ -30,10 +30,16 @@ class CSV{
 			    
 				$Content = self::set_content($pages,$posts);
 				
-				self::set_headers($FileName,$Content);
+				if(!empty($Content)){
 				
-				# print csv
-				exit( $Content );
+						self::set_headers($FileName,$Content);
+						
+						# print csv
+						exit( $Content );
+				
+				} 
+				
+				exit("No FB User IDs Found");
 				
 		}
 
@@ -106,15 +112,17 @@ class CSV{
 		protected static function get_links($pages=null,$posts=null){
 				
 				$arr_links = array();
-				
-				foreach($pages as $pag){
-					$arr_links[] = get_permalink($pag);
+				if(!empty($pages)){
+						foreach($pages as $pag){
+							$arr_links[] = get_permalink($pag);
+						}
 				}
 
-				foreach($posts as $pos){
-					$arr_links[] = get_permalink($pos);
+				if(!empty($posts)){
+						foreach($posts as $pos){
+							$arr_links[] = get_permalink($pos);
+						}
 				}
-				
 				return $arr_links;
 			
 		}

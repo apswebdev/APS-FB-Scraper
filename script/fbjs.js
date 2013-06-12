@@ -23,6 +23,39 @@ jQuery(document).ready(function(){
 				jQuery(this).parent().parent().nextAll(".hidden-conts").eq(0).hide();
 		
 	});
+	
+	// ==============================================================================
+	//	Select All or Unselect Check Boxes   
+	// ==============================================================================
+	jQuery("#all_page_select, #all_post_select").click(function(){
+				
+				if(jQuery(this).prop('checked')){
+					
+					if(jQuery(this).attr('id') == "all_page_select"){
+						
+						jQuery(".page_check").prop('checked', true);
+					
+					} else {
+					
+						jQuery(".post_check").prop('checked', true);
+					
+					}
+					
+				} else {
+				
+					if(jQuery(this).attr('id') == "all_page_select"){
+						
+						jQuery(".page_check").prop('checked', false);
+					
+					} else {
+					
+						jQuery(".post_check").prop('checked', false);
+					
+					}
+				
+				}
+		
+	});	
 
 	// ==============================================================================
 	//	This function is the saving for the FB Settings   
