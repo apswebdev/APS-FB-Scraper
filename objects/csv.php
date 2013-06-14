@@ -84,10 +84,10 @@ class CSV{
                 # header("Content-Disposition: attachment; filename='".$FileName."';" );
                 # header("Content-Transfer-Encoding: binary");
 				
-				header('Content-Type: application/csv');
-				header('Content-Length: '.strlen($Content));
-                header('Content-Disposition: attachment; filename='.$File);
-				header('Pragma: no-cache');
+				@header('Content-Type: application/csv');
+				@header('Content-Length: '.strlen($Content));
+                @header('Content-Disposition: attachment; filename='.$File);
+				@header('Pragma: no-cache');
 				
 				# clean previous header
 				ob_end_clean();
@@ -169,7 +169,7 @@ class CSV{
 							if ($k == "data"){
 									foreach($x as $data){
 										foreach($data as $key=> $value){
-											if ($key == "from"){
+											if ($key == "from" && $value != null){
 												foreach($value as $in => $v_in){
 													if($in == "id"){
 														if(!in_array($v_in, self::$actual_id)){
@@ -178,14 +178,88 @@ class CSV{
 													}
 												}
 											}
+											if ($key == "comments" && $value != null){
+												foreach( $value as $k1 => $v1){
+													if ($k1 == "data"){
+														    foreach($v1 as $d4){
+																foreach($d4 as $key4=> $value4){
+																	if ($key4 == "from" && $value4 != null){
+																		foreach($value4 as $in4 => $v_in4){
+																			if($in4 == "id"){
+																				if(!in_array($v_in4, self::$actual_id)){
+																					self::$actual_id[] = $v_in4;
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+													}
+												
+												}
+											}
 										}
 									}
+							} 
+							
+							if ($k == "paging"){
+								foreach($x as $key2 => $value2){
+									if($key2 == "next"){
+										self::get_paging($value2);
+										break;
+									}
+								}
 							}
 						}
 					}
 				}
 			
 		}
+
+		/*===================================================================
+		 *    : et_paging()
+		 *    : get the next comments in the comment box 
+		 *    ---------------------------------------------------------------
+		 *    : @Parameters  
+		 *      $url - actual FB json file api link
+		 *===================================================================*/				
+		protected static function get_paging($url=null){
+				
+				# fb link to get fb comment part for users data as returned
+				$json = file_get_contents($url);
+				
+				$arr = array();
+				
+				$fb_response = json_decode($json, true);
+				
+				foreach($fb_response as $k => $x){
+					if ($k == "data"){
+							foreach($x as $data){
+								foreach($data as $key=> $value){
+									if ($key == "from" && $value != null){
+										foreach($value as $in => $v_in){
+											if($in == "id"){
+												if(!in_array($v_in, self::$actual_id)){
+													self::$actual_id[] = $v_in;
+												}
+											}
+										}
+									}
+								}
+							}
+					} 
+					
+					if ($k == "paging"){
+						foreach($x as $key2 => $value2){
+							if($key2 == "next"){
+								self::get_paging($value2);
+								break;
+							}
+						}
+					}
+				}
+			
+		}		
 
 		/*===================================================================
 		 *    : set_csv_content()
@@ -215,9 +289,9 @@ class CSV{
  *    ---------------------------------------------------------------
  *    : @Parameters  n/a
  *===================================================================*/		
-	$pages = $_POST['page_check'];
-	$posts = $_POST['post_check'];
-	$url_scrape = $_POST['url_scrape'];
+	$pages = (isset($_POST['page_check'])) ? $_POST['page_check'] : "" ;
+	$posts = (isset($_POST['post_check'])) ? $_POST['post_check'] : "" ;
+	$url_scrape = (isset($_POST['url_scrape'])) ? $_POST['url_scrape'] : "" ;
 	
 	CSV::download_csv("id_scrape.csv",$pages,$posts,$url_scrape);
 	die();
