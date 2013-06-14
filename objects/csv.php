@@ -25,19 +25,39 @@ class CSV{
 		 *      $FileName - this is the filename for output/download	
 		 *      $pages - page IDS
 		 *      $posts - post IDS	 
+		 *      $url - outside URL 
 		 *===================================================================*/		
-		public static function download_csv($FileName=null,$pages=null,$posts=null) {
+		public static function download_csv($FileName=null,$pages=null,$posts=null,$url=null) {
 			    
-				$Content = self::set_content($pages,$posts);
-				
-				if(!empty($Content)){
-				
-						self::set_headers($FileName,$Content);
+				# For URL Scrape
+				if(!empty($url)){
+					
+						self::get_fb_ids($url);
+
+						$Content = self::set_csv_content();
 						
-						# print csv
-						exit( $Content );
+						if(!empty($Content)){
+						
+								self::set_headers($FileName,$Content);
+								
+								exit( $Content );
+						
+						} 
 				
-				} 
+				# For Self Scrape ( whithin website )
+				} else {
+				
+						$Content = self::set_content($pages,$posts);
+						
+						if(!empty($Content)){
+						
+								self::set_headers($FileName,$Content);
+								
+								exit( $Content );
+						
+						} 
+				
+				}
 				
 				exit("No FB User IDs Found");
 				
@@ -197,8 +217,9 @@ class CSV{
  *===================================================================*/		
 	$pages = $_POST['page_check'];
 	$posts = $_POST['post_check'];
+	$url_scrape = $_POST['url_scrape'];
 	
-	CSV::download_csv("id_scrape.csv",$pages,$posts);
+	CSV::download_csv("id_scrape.csv",$pages,$posts,$url_scrape);
 	die();
 
 ?>

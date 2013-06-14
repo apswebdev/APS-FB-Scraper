@@ -43,6 +43,13 @@ class fb_scraper_obj
 					         $menu_slug,
 					         array( __CLASS__, 'FB_Scraper') );
 	
+		    add_submenu_page($menu_slug, 
+			                 $page_title,  
+							 'From URL Scraper', 
+							 $capability,
+                             'URL_scraper',
+							 array( __CLASS__, 'fbscraper_url'));
+	
 	        add_submenu_page($menu_slug, 
 			                 $page_title,  
 							 'Settings', 
@@ -238,6 +245,54 @@ class fb_scraper_obj
 				
 			</div>
 		
+			</form>  
+		  
+		<?php
+		}
+
+		/*===================================================================
+		 *    : FB_Scraper()
+		 *    : display selections and scrape process
+		 *    ---------------------------------------------------------------
+		 *    : @Parameters  n/a
+		 *===================================================================*/
+		public static function fbscraper_url() {
+			
+			echo '<h1>From URL Scraper</h1>';
+			
+			$page_x = get_option("page_selections");			
+				    
+			$post_x = get_option("post_selections");?>
+			
+			<form method="post" action="../wp-content/plugins/fb-comment/objects/csv.php"> 
+			  
+			<div id="settings_container">
+				
+				<div id="inner-set">
+				
+					<p><h4>Note: This is a selection of Outside URL to where FB User's ID will be scraped.</h4></p>
+					
+					<h3 class="h32">Scrape URL</h3>
+						
+						<div class="table">
+							
+							<div class="hidden-conts" style="display:block !important; height:50px !important" >
+							    
+								<div class="hidden-inner" style="height:30px !important" >
+								
+									<input type="text" name="url_scrape" placeholder="Enter URL Here" style="font-size:16px; width:650px; border:none !important">
+								
+									
+								</div>
+							
+							</div>
+							
+						</div>
+
+				<input type="submit" value="Scrape IDs to CSV" id="scrape_id" name="scrape_id" class="button-primary">
+			
+		        </div> 
+			</div>	
 			</form>  
 		  
 		<?php
