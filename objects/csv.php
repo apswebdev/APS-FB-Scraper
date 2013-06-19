@@ -32,17 +32,25 @@ class CSV{
 				# For URL Scrape
 				if(!empty($url)){
 					
-						self::get_fb_ids($url);
-
-						$Content = self::set_csv_content();
-						
-						if(!empty($Content)){
-						
-								self::set_headers($FileName,$Content);
+						if(self::validate_url($url)){
+					
+								self::get_fb_ids($url);
+		
+								$Content = self::set_csv_content();
 								
-								exit( $Content );
+								if(!empty($Content)){
+								
+										self::set_headers($FileName,$Content);
+										
+										exit( $Content );
+								
+								} 
 						
-						} 
+						} else {
+							
+							    exit("Invalid URL");
+							
+						}
 				
 				# For Self Scrape ( whithin website )
 				} else {
@@ -93,6 +101,36 @@ class CSV{
 				ob_end_clean();
 		
 		}
+		
+
+		/*===================================================================
+		 *    : validate_url()
+		 *    : this is for validating url 
+		 *    ---------------------------------------------------------------
+		 *    : @Parameters 
+		 *      $url - Url Input
+		 *===================================================================*/			
+		protected static function validate_url($url=null){
+			
+	 			$pattern_1 = "/^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i";
+      			
+				$pattern_2 = "/^(www)((\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i";
+				
+				$pattern_3 = "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";       
+    			
+				if(preg_match($pattern_1, $URL) || preg_match($pattern_2, $URL)){
+					
+					if( preg_match($pattern_3, $URL)){
+				
+						return true;
+      				
+					}
+					
+				} 
+	  
+	  			return false;
+ 		
+		}		
 		
 		/*===================================================================
 		 *    : set_content()
