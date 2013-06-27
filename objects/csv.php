@@ -112,22 +112,20 @@ class CSV{
 		 *===================================================================*/			
 		protected static function validate_url($url=null){
 			
-	 			$pattern_1 = "/^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i";
-      			
-				$pattern_2 = "/^(www)((\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i";
-				
-				$pattern_3 = "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";       
-    			
-				if(preg_match($pattern_1, $URL) || preg_match($pattern_2, $URL)){
-					
-					if( preg_match($pattern_3, $URL)){
-				
-						return true;
-      				
-					}
-					
-				} 
-	  
+			    if (filter_var($url, FILTER_VALIDATE_URL) != false){
+
+						$pattern_1 = "/^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i";
+						$pattern_2 = "/^(www)((\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i";
+						$pattern_3 = "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i";       
+						
+						if(preg_match($pattern_1, $URL) || preg_match($pattern_2, $URL)){
+							
+							if( preg_match($pattern_3, $URL)){
+								return true;
+							}
+							
+						} 
+				}
 	  			return false;
  		
 		}		
