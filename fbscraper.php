@@ -38,27 +38,27 @@ class fb_scraper_obj
 			$menu_slug = 'fb_mngr';
 
 			add_object_page( $page_title, 
-	        	             $menu_title, 
-					         $capability, 
-					         $menu_slug,
-					         array( __CLASS__, 'FB_Scraper') );
+	        	                 $menu_title, 
+					 $capability, 
+					 $menu_slug,
+					 array( __CLASS__, 'FB_Scraper') );
 	
-		    add_submenu_page($menu_slug, 
+		        add_submenu_page($menu_slug, 
 			                 $page_title,  
-							 'From URL Scraper', 
-							 $capability,
-                             'URL_scraper',
-							 array( __CLASS__, 'fbscraper_url'));
+                                         'From URL Scraper', 
+					 $capability,
+                                         'URL_scraper',
+					 array( __CLASS__, 'fbscraper_url'));
 	
-	        add_submenu_page($menu_slug, 
+                        add_submenu_page($menu_slug, 
 			                 $page_title,  
-							 'Settings', 
-							 $capability,
-                             'scraper_settings',
-							 array( __CLASS__, 'fbscraper_settings'));
+					 'Settings', 
+                                	 $capability,
+                                         'scraper_settings',
+					array( __CLASS__, 'fbscraper_settings'));
 							 		
 			wp_register_style("fb-style", plugins_url( '/fb-comment/style/fbscraper.css' ) );
-		    wp_enqueue_style('fb-style');			 
+                        wp_enqueue_style('fb-style');			 
 			wp_enqueue_script("fb-js", plugins_url( '/fb-comment/script/fbjs.js' ) );
 		}
 
